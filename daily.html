@@ -534,14 +534,50 @@ function answerQuiz(chosen, correct, el) {
 }
 
 function playAudio() {
-  if (currentData && currentData.audio_url) {
-    new Audio(currentData.audio_url).play();
-  } else {
-    // 使用瀏覽器 TTS 作為後備
-    const utter = new SpeechSynthesisUtterance(currentData ? currentData.word : '');
+  const btn = document.getElementById('playBtn');
+
+  // 優先用 TTS 播台語（最穩定）
+  if (currentData && currentData.word) {
+    // 先試台語 TTS
+    const voices = speechSynthesis.getVoices();
+    const utter = new SpeechSynthesisUtterance(currentData.word);
+    
+    // 找台語或中文聲音
+    const twVoice = voices.find(v => v.lang === 'zh-TW') || 
+                    voices.find(v => v.lang.startsWith('zh'));
+    if (twVoice) utter.voice = twVoice;
     utter.lang = 'zh-TW';
+    utter.rate = 0.8; // 稍慢一點，聽得清楚
+    
+    speechSynthesis.cancel(); // 清除前一個
     speechSynthesis.speak(utter);
+    
+    // 如果有 Google Drive 音檔，另外嘗試播放
+    if (currentData.audio_url) {
+      tryPlayDriveAudio(currentData.audio_url, btn);
+    }
+    return;
   }
+
+  btn.textContent = '沒有音檔';
+}
+
+function tryPlayDriveAudio(url, btn) {
+  // 嘗試用 Audio 直接播（部分裝置可以）
+  const audio = new Audio();
+  audio.crossOrigin = 'anonymous';
+  
+  audio.oncanplay = () => {
+    audio.play().catch(() => {
+      // 靜默失敗，TTS 已在播了
+    });
+  };
+  
+  audio.onerror = () => {
+    // Drive 音檔無法播，TTS 已在播，不做任何事
+  };
+  
+  audio.src = url;
 }
 
 function updateStreak() {
