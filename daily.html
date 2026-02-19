@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>今日台語｜咱兜的台語</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:      #1a1008;
+      --paper:    #fdf6ec;
+      --warm1:    #c0392b;
+      --warm2:    #e67e22;
+      --accent:   #8b1a1a;
+      --muted:    #7a6552;
+      --card-bg:  #fffaf4;
+      --border:   #e8d5b0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--accent);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .logo-mark {
+      width: 36px; height: 36px;
+      background: var(--paper);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 900;
+      font-size: 18px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    header h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: .05em;
+    }
+    .back-btn {
+      margin-left: auto;
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      font-size: 13px;
+      background: rgba(255,255,255,.15);
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    /* ── Date strip ── */
+    .date-strip {
+      background: linear-gradient(135deg, #c0392b 0%, #8b1a1a 100%);
+      color: #fff;
+      text-align: center;
+      padding: 10px 20px 12px;
+      font-size: 13px;
+      letter-spacing: .08em;
+      opacity: .9;
+    }
+
+    /* ── Main card ── */
+    .main-card {
+      margin: 20px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+      animation: slideUp .5s ease both;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #8b1a1a, #c0392b);
+      padding: 20px;
+      text-align: center;
+    }
+    .category-tag {
+      display: inline-block;
+      background: rgba(255,255,255,.2);
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: .15em;
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .taiwanese-word {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 52px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+      text-shadow: 0 2px 8px rgba(0,0,0,.3);
+    }
+
+    .card-body { padding: 20px; }
+
+    .romanization {
+      text-align: center;
+      font-size: 20px;
+      color: var(--warm2);
+      font-weight: 500;
+      letter-spacing: .08em;
+      margin-bottom: 6px;
+    }
+    .mandarin {
+      text-align: center;
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .play-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: var(--warm1);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 13px;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      margin-bottom: 20px;
+    }
+    .play-btn:active { transform: scale(.97); }
+    .play-btn:hover { background: #a93226; }
+    .play-btn svg { width: 18px; height: 18px; fill: #fff; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 4px 0 18px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      letter-spacing: .15em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    /* Example sentences */
+    .example-block {
+      background: #fef9f0;
+      border-left: 3px solid var(--warm2);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
+    .example-tw {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 3px;
+    }
+    .example-rom {
+      font-size: 13px;
+      color: var(--warm2);
+      margin-bottom: 3px;
+    }
+    .example-zh {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Tip box */
+    .tip-box {
+      background: #fff8e8;
+      border: 1px dashed var(--warm2);
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 16px;
+    }
+    .tip-label {
+      font-size: 11px;
+      letter-spacing: .12em;
+      color: var(--warm2);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .tip-text {
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* ── Daily quiz strip ── */
+    .quiz-card {
+      margin: 0 16px 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      animation: slideUp .6s .15s ease both;
+    }
+    .quiz-card h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 16px;
+      margin-bottom: 14px;
+      color: var(--ink);
+    }
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .quiz-opt {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 10px;
+      font-size: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      color: var(--ink);
+    }
+    .quiz-opt:hover { border-color: var(--warm1); background: #fff5f5; }
+    .quiz-opt.correct { border-color: #27ae60; background: #eafaf1; color: #27ae60; }
+    .quiz-opt.wrong   { border-color: var(--warm1); background: #fdf0ee; color: var(--warm1); }
+
+    /* ── Navigation bottom ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0 12px;
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 10px;
+      padding: 4px 12px;
+    }
+    .nav-item.active { color: var(--warm1); }
+    .nav-item svg { width: 22px; height: 22px; }
+
+    .page-bottom-space { height: 80px; }
+
+    /* ── Loading skeleton ── */
+    .skeleton {
+      background: linear-gradient(90deg, #f0e6d3 25%, #fdf6ec 50%, #f0e6d3 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 6px;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Loading state */
+    .loading-state { display: none; }
+    body.loading .loading-state { display: block; }
+    body.loading .content-state { display: none; }
+    .content-state { display: block; }
+
+    /* Streak badge */
+    .streak-banner {
+      margin: 0 16px 16px;
+      background: linear-gradient(135deg, #e67e22, #f39c12);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      animation: slideUp .5s .3s ease both;
+    }
+    .streak-fire { font-size: 24px; }
+    .streak-text { font-size: 14px; line-height: 1.4; }
+    .streak-text strong { font-size: 16px; display: block; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">台</div>
+  <h1>今日台語</h1>
+  <a href="index.html" class="back-btn">← 返回</a>
+</header>
+
+<div class="date-strip" id="dateStrip">載入中…</div>
+
+<!-- 連續學習 streak -->
+<div class="streak-banner" id="streakBanner" style="display:none">
+  <div class="streak-fire">🔥</div>
+  <div class="streak-text">
+    <strong id="streakCount">0 天連續學習</strong>
+    繼續保持，你很棒！
+  </div>
+</div>
+
+<!-- 主詞彙卡 -->
+<div class="main-card">
+  <div class="card-header">
+    <div class="category-tag" id="categoryTag">載入中</div>
+    <div class="taiwanese-word" id="mainWord">—</div>
+  </div>
+  <div class="card-body">
+    <div class="romanization" id="romanization">—</div>
+    <div class="mandarin" id="mandarin">—</div>
+
+    <button class="play-btn" id="playBtn" onclick="playAudio()">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      聽發音
+    </button>
+
+    <hr class="divider">
+    <div class="section-title">例句</div>
+
+    <div class="example-block" id="example1">
+      <div class="example-tw" id="ex1Tw">—</div>
+      <div class="example-rom" id="ex1Rom">—</div>
+      <div class="example-zh" id="ex1Zh">—</div>
+    </div>
+
+    <div class="example-block" id="example2" style="display:none">
+      <div class="example-tw" id="ex2Tw"></div>
+      <div class="example-rom" id="ex2Rom"></div>
+      <div class="example-zh" id="ex2Zh"></div>
+    </div>
+
+    <div class="tip-box" id="tipBox" style="display:none">
+      <div class="tip-label">📝 學習小提示</div>
+      <div class="tip-text" id="tipText"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 小測驗 -->
+<div class="quiz-card" id="quizCard" style="display:none">
+  <h3>🎯 今日小測驗</h3>
+  <div style="font-size:16px; margin-bottom:12px; color:var(--muted)">
+    「<span id="quizQuestion" style="color:var(--ink);font-weight:600"></span>」是什麼意思？
+  </div>
+  <div class="quiz-options" id="quizOptions"></div>
+  <div id="quizResult" style="margin-top:12px; font-size:14px; text-align:center; display:none"></div>
+</div>
+
+<div class="page-bottom-space"></div>
+
+<!-- 底部導覽 -->
+<nav class="bottom-nav">
+  <a href="daily.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+    今日台語
+  </a>
+  <a href="videos.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    影片教學
+  </a>
+  <a href="seminar.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+    線上研討
+  </a>
+  <a href="homework.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+    學習作業
+  </a>
+  <a href="progress.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+    我的進度
+  </a>
+</nav>
+
+<script>
+// ═══════════════════════════════════════════
+// 設定區：填入你的 Google Sheets 資料
+// ═══════════════════════════════════════════
+const CONFIG = {
+  // ↓ 請換成你的 Google Apps Script Web App URL
+  GAS_URL: 'https://script.google.com/macros/s/AKfycby6rz-ijVLRwpZr9ectLqcv1G2UbqGIVWGqjnVxyww53quFR7q1UFW04gysZwjfeX4w1Q/exec',
+  
+  // 是否使用測試資料（true = 不連網路，直接顯示假資料）
+  USE_DEMO: false,
+};
+
+// 示範資料（當 USE_DEMO = true 時使用）
+const DEMO_DATA = {
+  word: '飯',
+  romanization: 'png',
+  mandarin: '飯、白飯',
+  category: '飲食類',
+  audio_url: '',
+  example1_tw: '你食飯未？',
+  example1_rom: 'Lí tsia̍h-png bē?',
+  example1_zh: '你吃飯了嗎？',
+  example2_tw: '阮兜的飯足好食。',
+  example2_rom: 'Gún-tau ê png tsiok hó-tsia̍h.',
+  example2_zh: '我家的飯很好吃。',
+  tip: '「食飯未」是台灣人打招呼的常用語，就像「你好嗎？」一樣親切自然。',
+  quiz_options: ['白飯', '水', '麵', '肉'],
+  quiz_answer: 0,
+};
+
+// ═══════════════════════════════════════════
+
+let currentData = null;
+let quizAnswered = false;
+
+function formatDate() {
+  const d = new Date();
+  const weekdays = ['日','一','二','三','四','五','六'];
+  return `${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日　星期${weekdays[d.getDay()]}`;
+}
+
+async function loadTodayWord() {
+  document.getElementById('dateStrip').textContent = formatDate();
+
+  if (CONFIG.USE_DEMO) {
+    renderWord(DEMO_DATA);
+    return;
+  }
+
+  try {
+    const res = await fetch(CONFIG.GAS_URL + '?action=daily');
+    const data = await res.json();
+    renderWord(data);
+  } catch (e) {
+    console.error(e);
+    renderWord(DEMO_DATA); // 失敗時顯示示範
+  }
+}
+
+function renderWord(data) {
+  currentData = data;
+
+  document.getElementById('categoryTag').textContent = data.category || '今日詞彙';
+  document.getElementById('mainWord').textContent = data.word;
+  document.getElementById('romanization').textContent = data.romanization;
+  document.getElementById('mandarin').textContent = data.mandarin;
+
+  // 例句 1
+  document.getElementById('ex1Tw').textContent = data.example1_tw;
+  document.getElementById('ex1Rom').textContent = data.example1_rom;
+  document.getElementById('ex1Zh').textContent = data.example1_zh;
+
+  // 例句 2（選填）
+  if (data.example2_tw) {
+    document.getElementById('ex2Tw').textContent = data.example2_tw;
+    document.getElementById('ex2Rom').textContent = data.example2_rom;
+    document.getElementById('ex2Zh').textContent = data.example2_zh;
+    document.getElementById('example2').style.display = 'block';
+  }
+
+  // 學習提示（選填）
+  if (data.tip) {
+    document.getElementById('tipText').textContent = data.tip;
+    document.getElementById('tipBox').style.display = 'block';
+  }
+
+  // 小測驗
+  if (data.quiz_options && data.quiz_options.length) {
+    renderQuiz(data);
+  }
+
+  // Streak
+  updateStreak();
+}
+
+function renderQuiz(data) {
+  document.getElementById('quizQuestion').textContent = data.word;
+  const container = document.getElementById('quizOptions');
+  container.innerHTML = '';
+  data.quiz_options.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.onclick = () => answerQuiz(i, data.quiz_answer, btn);
+    container.appendChild(btn);
+  });
+  document.getElementById('quizCard').style.display = 'block';
+}
+
+function answerQuiz(chosen, correct, el) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach((o, i) => {
+    if (i === correct) o.classList.add('correct');
+    else if (o === el)  o.classList.add('wrong');
+  });
+
+  const result = document.getElementById('quizResult');
+  result.style.display = 'block';
+  if (chosen === correct) {
+    result.innerHTML = '🎉 答對了！繼續加油！';
+    result.style.color = '#27ae60';
+  } else {
+    result.innerHTML = `答案是「${currentData.quiz_options[correct]}」，沒關係，繼續學！`;
+    result.style.color = '#c0392b';
+  }
+}
+
+function playAudio() {
+  if (currentData && currentData.audio_url) {
+    new Audio(currentData.audio_url).play();
+  } else {
+    // 使用瀏覽器 TTS 作為後備
+    const utter = new SpeechSynthesisUtterance(currentData ? currentData.word : '');
+    utter.lang = 'zh-TW';
+    speechSynthesis.speak(utter);
+  }
+}
+
+function updateStreak() {
+  const key = 'daily_streak';
+  const lastKey = 'daily_last';
+  const today = new Date().toDateString();
+  const last = localStorage.getItem(lastKey);
+  let streak = parseInt(localStorage.getItem(key) || '0');
+
+  if (last === today) {
+    // 今天已記錄
+  } else if (last === new Date(Date.now() - 86400000).toDateString()) {
+    streak++;
+    localStorage.setItem(key, streak);
+    localStorage.setItem(lastKey, today);
+  } else {
+    streak = 1;
+    localStorage.setItem(key, 1);
+    localStorage.setItem(lastKey, today);
+  }
+
+  if (streak >= 2) {
+    document.getElementById('streakCount').textContent = `${streak} 天連續學習`;
+    document.getElementById('streakBanner').style.display = 'flex';
+  }
+}
+
+// 啟動
+loadTodayWord();
+</script>
+</body>
+</html>
